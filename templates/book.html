@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Подписка</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/reveal.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/layout.css"/>
+    <link href="/css/jquery.formstyler.css" rel="stylesheet"/>
+
+
+    <script type="text/javascript" src="/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.formstyler.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.reveal.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32605373-4']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</head>
+<body>
+<div id="note" class="hidden">You smell good.</div>
+<a href="/pages/unsubscribe.html" class="unsubscribe-link">Отписаться</a>
+<div class="container">
+    <form class="subscribe cf">
+        <div class="subscribe-title">Лайфхакер на Киндл</div>
+        <div class="subscribe-main">
+            <ul>
+                <li>1. Добавьте robot@tokindle.ru в список доверенных <a
+                        href="https://www.amazon.com/gp/digital/fiona/manage?ie=UTF8&ref_=kinw_myk_surl_1#pdocSettings">на
+                    Амазоне</a>.
+                </li>
+                <li>2. Введите email-адрес Вашего устройства.<input type="text" name="mail" class="input email"></li>
+
+                <li>3. Отправлять записи</li>
+
+                <label><input type="checkbox" name="daily"/><span class="checkbox-title">Каждый день (все записи за день)</span></label>
+                <label><input type="checkbox" name="weekly"/><span class="checkbox-title">Каждую неделю (10 лучших записей за неделю)</span></label>
+            </ul>
+            <button class="subscribe-button" data-reveal-id="myModal">Подписаться</button>
+        </div>
+        <div class="subscribe-questions">
+            <div class="question">— Что это?</div>
+            <div class="answer">Это сервис для доставки лучших записей дня или недели на Киндл.</div>
+
+            <div class="question">— Во сколько отправляются записи?</div>
+            <div class="answer">В 2 часа ночи по российскому времени.</div>
+
+            <div class="question">— Мне пришло 3 дайджеста вместо одного</div>
+            <div class="answer">Странно, почему Амазон принял один документ за три. Сделал немного по-другому, теперь
+                дайджесты будут корректно отправляться.
+            </div>
+
+            <div class="question">— Есть предложение!</div>
+            <div class="answer">Напишите, пожалуйста, на почту <a href="mailto:mail@vadimklimenko.com">mail@vadimklimenko.com</a>!
+            </div>
+
+        </div>
+        <input type="hidden" name="action" value="subscribe">
+    </form>
+</div>
+
+<div id="myModal" class="reveal-modal">
+    <h2>Всё замечательно!</h2>
+    <p>Вы успешно подписаны на дайджесты.</p>
+    <p>Если захотите отписаться — на сайте справа вверху всегда есть ссылка «Отписаться».</p>
+    <p>В качестве подарка мы уже отправили дайджест лучших записей за последнюю неделю.</p>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+</body>
+</html>

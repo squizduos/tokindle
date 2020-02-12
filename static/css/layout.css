@@ -1,0 +1,148 @@
+#note {
+    position: absolute;
+    z-index: 101;
+    top: -50px;
+    left: 0;
+    right: 0;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e8e8e8));
+	background: -webkit-linear-gradient(top, #fdfdfd, #e8e8e8);
+	background: -moz-linear-gradient(top, #fdfdfd, #e8e8e8);
+	background: -ms-linear-gradient(top, #fdfdfd, #e8e8e8);
+	background: -o-linear-gradient(top, #fdfdfd, #e8e8e8);
+	background: -webkit-linear-gradient(top, #fdfdfd, #e8e8e8);
+    text-align: center;
+    line-height: 2.5;
+    overflow: hidden; 
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+}
+.unsubscribe-link{
+	position:absolute;
+	right:10px;
+	top:10px;
+	padding-bottom:1px;
+	font-size:12px;
+}
+.unsubscribe-link a{
+	margin-right: 10px;
+}
+.welcome{
+	width:820px;
+	margin:0 auto;
+}
+	.kindle{
+		float:left;
+		background:url(../img/kindle.png);
+		display:block;
+		width:340px;
+		height:508px;
+	}
+	.intro{
+		text-shadow:-1px -1px 1px #666;
+		width:480px;
+		float:left;
+	}
+		.intro-subscribe{
+			margin-bottom:30px;
+			text-align:center;
+			font-weight: bold;
+			font-size:38px;
+			color:#fff;
+		}
+		.intro-sl{
+			line-height:150%;
+			text-align:center;
+			color:#fff;
+			font-size:22px;
+			margin-bottom:30px;
+		}
+		.button{
+			text-align:center;
+			width:120px;
+			display:block !important;
+			margin:0 auto !important;
+		}
+.subscribe{
+	display:block;
+	top:0;
+	width:820px;
+	margin:0 auto;
+}
+	.subscribe-main{
+		text-shadow:0px 1px 0px #31313b;
+		width:480px;
+		float:left;
+	}
+	.subscribe-questions{
+		border-left:1px solid rgba(120,120,120,0.7);
+		padding-left:9px;
+		width:330px;
+		float:left;
+	}
+		.subscribe-title{
+			text-shadow:0px 1px 0px #31313b;
+			color:#fff;
+			font-size:35px;
+		}
+		.subscribe-main ul {
+			margin-top:15px;
+			color:#fff;
+			font-weight: bold;
+			font-size:18px;
+		}
+			.subscribe-main ul li{
+				margin-bottom:20px;
+				line-height:25px;
+			}
+			.subscribe-main label{
+				cursor:pointer;
+				display:block;
+				margin-bottom:10px;
+			}
+			.subscribe-main .checkbox-title{
+				vertical-align: top;
+				margin-left:10px;
+				display:inline-block;
+				height:22px;
+				line-height:22px;
+				font-size:15px;
+			}
+	.subscribe-button{
+		height:40px;
+		line-height:40px;
+		padding:0 15px;
+		margin-top:10px;
+		font-size:15px;
+	}
+		.question{
+			line-height: 25px;
+			text-shadow:0px 1px 0px #31313b;
+			font-size:105%;
+			margin-top:15px;
+			color:#fff;
+		}
+		.answer{
+			text-shadow:0px 1px 0px #31313b;
+			margin-bottom:15px;
+			line-height:130%;
+			font-size:95%;
+			margin-top:5px;
+			color:#fff;
+		}
+.unsubscribe{
+	width:820px;
+	margin:0 auto;
+	color:#fff;
+	font-size:18px;
+}
+	.unsubscribe-title{
+		text-shadow:0px 1px 0px #31313b;
+		color:#fff;
+		font-size:35px;
+		margin-bottom:10px;
+	}
+	.unsubscribe-text{
+		line-height:30px;
+		max-width:500px;
+	}
