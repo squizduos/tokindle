@@ -3,12 +3,13 @@ import logging
 import ssl
 import sys
 
-from os import environ
 
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.webhook import *
 from aiogram.utils.executor import start_polling, start_webhook
+
+from bot import cmd_start
 
 logging.basicConfig(level=logging.INFO)
 
@@ -23,10 +24,6 @@ parser.add_argument('--pkey', help='Path to SSL private key')
 parser.add_argument('--host-name', help='Set webhook host name')
 parser.add_argument('--webhook-port', type=int, help='Port for webhook (default=port)')
 parser.add_argument('--webhook-path', default='/webhook', help='Port for webhook (default=port)')
-
-
-async def cmd_start(message: types.Message):
-    return SendMessage(message.chat.id, f"Hello, {message.from_user.full_name}!")
 
 
 def setup_handlers(dispatcher: Dispatcher):
@@ -64,21 +61,6 @@ async def on_shutdown(dispatcher):
     print('Shutdown.')
 
 
-class Config:
-    """Set configuration vars from .env file."""
-
-    # General Config
-    TOKEN = environ.get('TOKEN')
-    SOCK = environ.get('SOCK')
-
-    HOST = environ.get('HOST')
-    PORT = environ.get('PORT')
-    CERT = environ.get('CERT')
-    PKEY = environ.get('PKEY')
-
-    HOSTNAME = environ.get('HOSTNAME')
-    WEBHOOK_PORT = environ.get('WEBHOOK_PORT')
-    WEBHOOK_PATH = environ.get('WEBHOOK_PATH')
 
 
 def main(arguments):
@@ -125,13 +107,5 @@ if __name__ == '__main__':
     if not len(argv):
         parser.print_help()
         sys.exit(1)
-
-    from redis import Redis
-    from rq import Queue
-
-    q = Queue(connection=Redis())
-
-    from tasks import count_words_at_url
-    result = q.enqueue(count_words_at_url, 'http://nvie.com')
 
     main(argv)
