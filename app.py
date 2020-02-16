@@ -9,30 +9,16 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.webhook import *
 from aiogram.utils.executor import start_polling, start_webhook
 
+import motor.motor_asyncio
+
 from bot import cmd_start
+from config import Config
 
 logging.basicConfig(level=logging.INFO)
 
-# Configure arguments parser.
-parser = argparse.ArgumentParser(description='Python telegram bot')
-parser.add_argument('--token', '-t', nargs='?', type=str, default=None, help='Set working directory')
-parser.add_argument('--sock', help='UNIX Socket path')
-parser.add_argument('--host', help='Webserver host')
-parser.add_argument('--port', type=int, help='Webserver port')
-parser.add_argument('--cert', help='Path to SSL certificate')
-parser.add_argument('--pkey', help='Path to SSL private key')
-parser.add_argument('--host-name', help='Set webhook host name')
-parser.add_argument('--webhook-port', type=int, help='Port for webhook (default=port)')
-parser.add_argument('--webhook-path', default='/webhook', help='Port for webhook (default=port)')
 
-
-def setup_handlers(dispatcher: Dispatcher):
-    # This example has only one messages handler
+async def on_startup(dispatcher, url=None):
     dispatcher.register_message_handler(cmd_start, commands=['start', 'welcome'])
-
-
-async def on_startup(dispatcher, url=None, cert=None):
-    setup_handlers(dispatcher)
 
     bot = dispatcher.bot
 
@@ -45,13 +31,7 @@ async def on_startup(dispatcher, url=None, cert=None):
             # If URL doesnt match with by current remove webhook
             if not webhook.url:
                 await bot.delete_webhook()
-
-            # Set new URL for webhook
-            if cert:
-                with open(cert, 'rb') as cert_file:
-                    await bot.set_webhook(url, certificate=cert_file)
-            else:
-                await bot.set_webhook(url)
+            await bot.set_webhook(url)
     elif webhook.url:
         # Otherwise remove webhook.
         await bot.delete_webhook()
@@ -61,51 +41,21 @@ async def on_shutdown(dispatcher):
     print('Shutdown.')
 
 
-
-
-def main(arguments):
-    args = parser.parse_args(arguments)
-    token = args.token
-    sock = args.sock
-    host = args.host
-    port = args.port
-    cert = args.cert
-    pkey = args.pkey
-    host_name = args.host_name or host
-    webhook_port = args.webhook_port or port
-    webhook_path = args.webhook_path
-
-    # Fi webhook path
-    if not webhook_path.startswith('/'):
-        webhook_path = '/' + webhook_path
-
-    # Generate webhook URL
-    webhook_url = f"https://{host_name}:{webhook_port}{webhook_path}"
-
+def main():
     # Create bot & dispatcher instances.
-    bot = Bot(token)
+    bot = Bot(Config.TOKEN)
     dispatcher = Dispatcher(bot)
 
-    if (sock or host) and host_name:
-        if cert and pkey:
-            ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-            ssl_context.load_cert_chain(cert, pkey)
-        else:
-            ssl_context = None
-
-        start_webhook(dispatcher, webhook_path,
-                      on_startup=functools.partial(on_startup, url=webhook_url, cert=cert),
+    if Config.HOST or Config.WEBHOOK_HOST:
+        # Generate webhook URL
+        webhook_url = f"https://{Config.WEBHOOK_HOST}:{Config.WEBHOOK_PORT}/{Config.WEBHOOK_PATH}"
+        start_webhook(dispatcher, Config.WEBHOOK_PATH,
+                      on_startup=functools.partial(on_startup, url=webhook_url),
                       on_shutdown=on_shutdown,
-                      host=host, port=port, path=sock, ssl_context=ssl_context)
+                      host=Config.HOST, port=Config.PORT, ssl_context=None)
     else:
         start_polling(dispatcher, on_startup=on_startup, on_shutdown=on_shutdown)
 
 
 if __name__ == '__main__':
-    argv = sys.argv[1:]
-
-    if not len(argv):
-        parser.print_help()
-        sys.exit(1)
-
-    main(argv)
+    main()
