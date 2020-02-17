@@ -1,17 +1,22 @@
-from os import environ
+import environ
 
 
-class Config:
-    """Set configuration vars from .env file."""
+@environ.config(prefix="APP")
+class AppConfig:
+    @environ.config
+    class Bot:
+        token = environ.var()
+        host = environ.var("0.0.0.0")
+        port = environ.var(8000, converter=int)  
+        webhook = environ.var() 
 
-    # General Config
-    TOKEN = environ.get('TOKEN')
+    @environ.config
+    class Converter:
+        fb2 = environ.var("FB2")
+        cbz = environ.var("CBZ")
+        pdf = environ.var("PDF") 
 
-    HOST = environ.get('HOST')
-    PORT = environ.get('PORT')
-
-    WEBHOOK_HOST = environ.get('WEBHOOK_HOST')
-    WEBHOOK_PORT = environ.get('WEBHOOK_PORT')
-    WEBHOOK_PATH = environ.get('WEBHOOK_PATH')
-
-    
+    debug = environ.var(False, converter=bool)
+    db = environ.var()
+    bot = environ.group(Bot)
+    converter = environ.group(Converter)

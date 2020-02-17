@@ -12,7 +12,9 @@ from aiogram.utils.executor import start_polling, start_webhook
 import motor.motor_asyncio
 
 from bot import cmd_start
-from config import Config
+from config import AppConfig
+
+import environ
 
 logging.basicConfig(level=logging.INFO)
 
@@ -42,17 +44,19 @@ async def on_shutdown(dispatcher):
 
 
 def main():
+    cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
-    bot = Bot(Config.TOKEN)
+    print(cfg)
+    bot = Bot(cfg.bot.token)
     dispatcher = Dispatcher(bot)
+    client = motor.motor_asyncio.AsyncIOMotorClient(cfg.db)
 
-    if Config.HOST or Config.WEBHOOK_HOST:
-        # Generate webhook URL
-        webhook_url = f"https://{Config.WEBHOOK_HOST}:{Config.WEBHOOK_PORT}/{Config.WEBHOOK_PATH}"
-        start_webhook(dispatcher, Config.WEBHOOK_PATH,
-                      on_startup=functools.partial(on_startup, url=webhook_url),
+
+    if cfg.bot.webhook:
+        start_webhook(dispatcher, '/webhook',
+                      on_startup=functools.partial(on_startup, url=cfg.bot.webhook),
                       on_shutdown=on_shutdown,
-                      host=Config.HOST, port=Config.PORT, ssl_context=None)
+                      host=cfg.bot.host, port=cfg.bot.port, ssl_context=None)
     else:
         start_polling(dispatcher, on_startup=on_startup, on_shutdown=on_shutdown)
 
