@@ -12,9 +12,17 @@ class AppConfig:
 
     @environ.config
     class Converter:
-        fb2 = environ.var("FB2")
-        cbz = environ.var("CBZ")
-        pdf = environ.var("PDF") 
+        fb2 = environ.var("fb2c")
+        mobi = environ.var("kindlegen")
+
+    @environ.config
+    class Email:
+        host = environ.var()
+        port = environ.var(465, converter=int)
+        username = environ.var()
+        password = environ.var()
+        tls = environ.var(True, converter=bool)  
+        address = environ.var()
 
     debug = environ.var(False, converter=bool)
     db = environ.var()

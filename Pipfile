@@ -11,6 +11,8 @@ aiogram = "*"
 motor = "*"
 environ-config = "*"
 dnspython = "*"
+mongoengine = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"

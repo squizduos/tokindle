@@ -16,6 +16,8 @@ from config import AppConfig
 
 import environ
 
+import mongoengine
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -49,8 +51,9 @@ def main():
     print(cfg)
     bot = Bot(cfg.bot.token)
     dispatcher = Dispatcher(bot)
-    client = motor.motor_asyncio.AsyncIOMotorClient(cfg.db)
-
+    
+    mongoengine.disconnect()
+    mongoengine.connect('tokindle', host=cfg.db)
 
     if cfg.bot.webhook:
         start_webhook(dispatcher, '/webhook',
