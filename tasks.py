@@ -5,12 +5,47 @@ import os
 
 import subprocess
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.MIMEImage import MIMEImage
+
+import smtplib
+
+
 def count_words_at_url(url):
     resp = requests.get(url)
     return len(resp.text.split())
 
-async def launch(command):
-    return os.popen(command).read()
+async def send_email(host, port, login, password, to, file_name):
+    # create message object instance
+    msg = MIMEMultipart()
+    
+    
+    message = "Thank you"
+    
+    # setup the parameters of the message
+    msg['From'] = login
+    msg['To'] = to
+    msg['Subject'] = file_name
+    
+    # add in the message body
+    msg.attach(MIMEImage(open(file_name).read()))
+
+    
+    #create server
+    server = smtplib.SMTP(f'{host}:{port}')
+    
+    server.starttls()
+    
+    # Login Credentials for sending the mail
+    server.login(login, password)
+    
+    
+    # send the message via the server.
+    server.sendmail(login, to, msg.as_string())
+    
+    server.quit()
+
 
 async def run_command(*args):
     """Run command in subprocess.
@@ -53,7 +88,7 @@ async def run_command(*args):
 def main():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop) 
-    result = loop.run_until_complete(launch("./bin/fb2c convert --to mobi t.zip"))
+    result = loop.run_until_complete(run_command("./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"))
     print(result)
     loop.close()
 

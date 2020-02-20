@@ -1,0 +1,84 @@
+2020-02-20T15:57:16.696+0300	DEBUG	fb2converter@/fb2c.go:87	Program started	{"args": ["./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip /tmp/"], "ver": "1.43 (go1.13.5) : d4bf246827668e33b60bad62599e34aba0ad44f2"}
+2020-02-20T15:57:16.696+0300	INFO	commands/convert.go:235	Processing starting	{"source": "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip /tmp", "destination": "/home/squizduos/Projects/tokindle", "format": "mobi"}
+2020-02-20T15:57:16.696+0300	INFO	commands/convert.go:237	Processing completed	{"elapsed": "36.231µs"}
+2020-02-20T15:57:16.696+0300	DEBUG	fb2converter@/fb2c.go:103	Program ended	{"parsed args": ["convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip /tmp/"]}
+2020-02-20T15:57:37.096+0300	DEBUG	fb2converter@/fb2c.go:87	Program started	{"args": ["./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"], "ver": "1.43 (go1.13.5) : d4bf246827668e33b60bad62599e34aba0ad44f2"}
+2020-02-20T15:57:37.096+0300	INFO	commands/convert.go:235	Processing starting	{"source": "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "destination": "/tmp", "format": "mobi"}
+2020-02-20T15:57:37.097+0300	INFO	commands/convert.go:34	Conversion starting	{"from": "avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2"}
+2020-02-20T15:57:37.241+0300	DEBUG	processor/process.go:867	Parsing notes - start
+2020-02-20T15:57:37.241+0300	DEBUG	processor/process.go:869	Parsing notes - done	{"elapsed": "149.171µs", "body titles": 1, "notes bodies": 1, "notes": 8}
+2020-02-20T15:57:37.241+0300	DEBUG	processor/process.go:896	Parsing images - start
+2020-02-20T15:57:37.249+0300	DEBUG	processor/process.go:898	Parsing images - done	{"elapsed": "8.015045ms", "images": 1}
+2020-02-20T15:57:37.249+0300	DEBUG	processor/process.go:576	Parsing description - start
+2020-02-20T15:57:37.249+0300	DEBUG	processor/process.go:578	Parsing description - done	{"elapsed": "45.278µs", "id": "317503a8-b0a3-48ce-8506-3540168fb03a", "asin": "", "title": "Вся Стальная Крыса. Том 1", "lang": "ru", "cover": "cover.jpg", "genres": ["sf_humor", "sf_space"], "authors": "Гаррисон Гарри", "sequence": "Стальная Крыса (Гаррисон)", "sequence number": 0, "date": ""}
+2020-02-20T15:57:37.249+0300	DEBUG	processor/process.go:792	Parsing bodies - start
+2020-02-20T15:57:37.249+0300	DEBUG	processor/xhtml.go:36	Parsing body - start	{"name": ""}
+2020-02-20T15:57:37.452+0300	DEBUG	processor/xhtml.go:38	Parsing body - done	{"elapsed": "202.932666ms", "name": ""}
+2020-02-20T15:57:37.452+0300	DEBUG	processor/xhtml.go:36	Parsing body - start	{"name": "notes"}
+2020-02-20T15:57:37.452+0300	DEBUG	processor/xhtml.go:38	Parsing body - done	{"elapsed": "255.205µs", "name": "notes"}
+2020-02-20T15:57:37.452+0300	DEBUG	processor/process.go:794	Parsing bodies - done	{"elapsed": "203.266915ms"}
+2020-02-20T15:57:37.452+0300	DEBUG	processor/process.go:1009	Processing links - start
+2020-02-20T15:57:37.457+0300	DEBUG	processor/process.go:1011	Processing links - done	{"elapsed": "4.286967ms"}
+2020-02-20T15:57:37.457+0300	DEBUG	processor/process.go:1037	Processing images - start
+2020-02-20T15:57:37.457+0300	DEBUG	processor/process.go:1039	Processing images - done	{"elapsed": "14.11µs"}
+2020-02-20T15:57:37.457+0300	DEBUG	processor/generate.go:30	Generating TOC page - start
+2020-02-20T15:57:37.457+0300	DEBUG	processor/generate.go:32	Generating TOC page - done	{"elapsed": "185.932µs"}
+2020-02-20T15:57:37.457+0300	DEBUG	processor/generate.go:95	Generating cover page - start
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:97	Generating cover page - done	{"elapsed": "20.831607ms"}
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:228	Generating NCX - start
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:230	Generating NCX - done	{"elapsed": "259.999µs"}
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:313	Processing stylesheet - start
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:315	Processing stylesheet - done	{"elapsed": "289.106µs"}
+2020-02-20T15:57:37.478+0300	DEBUG	processor/generate.go:398	Generating page map - start
+2020-02-20T15:57:37.479+0300	DEBUG	processor/generate.go:400	Generating page map - done	{"elapsed": "557.979µs"}
+2020-02-20T15:57:37.479+0300	DEBUG	processor/generate.go:434	Generating OPF - start
+2020-02-20T15:57:37.479+0300	DEBUG	processor/generate.go:436	Generating OPF - done	{"elapsed": "152.998µs"}
+2020-02-20T15:57:37.479+0300	DEBUG	processor/process.go:410	Saving content - starting	{"tmp": "/tmp/fb2c-959924195", "content": "OEBPS"}
+2020-02-20T15:57:37.526+0300	DEBUG	processor/imagefile.go:154	Inserting jpeg JFIF APP0 marker segment	{"id": "cover.jpg"}
+2020-02-20T15:57:37.534+0300	DEBUG	processor/mobiazw3.go:153	kindlegen staring
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	*************************************************************
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	 Amazon kindlegen(Linux) V2.9 build 1028-0897292 
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	 A command line e-book compiler 
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	 Copyright Amazon.com and its Affiliates 2014 
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	*************************************************************
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	
+2020-02-20T15:57:37.535+0300	DEBUG	processor/mobiazw3.go:174	Info:I9006:option: -c1: Standard DOC compression
+2020-02-20T15:57:37.559+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1047: Added metadata dc:Title        "(СКГ) Вся Стальная Крыса. Том 1"
+2020-02-20T15:57:37.559+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1047: Added metadata dc:Creator      "Гаррисон Гарри"
+2020-02-20T15:57:37.569+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1047: Added metadata dc:Subject      "sf_humor"
+2020-02-20T15:57:37.569+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1047: Added metadata dc:Subject      "sf_space"
+2020-02-20T15:57:37.569+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1047: Added metadata dc:Description  "Великолепный Джим ди Гриз — знаменитый межзвездный преступник — получил за свою изобретательность и решительность меткое прозвище «Крыса из нержавеющ�
+2020-02-20T15:57:37.576+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1002: Parsing files  0000132
+2020-02-20T15:57:38.932+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1015: Building PRC file
+2020-02-20T15:57:38.932+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1006: Resolving hyperlinks
+2020-02-20T15:57:38.942+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1008: Resolving start reading location
+2020-02-20T15:57:38.942+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1049: Building table of content     URL: /tmp/fb2c-959924195/OEBPS/toc.ncx
+2020-02-20T15:57:39.546+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1045: Computing UNICODE ranges used in the book
+2020-02-20T15:57:39.546+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1046: Found UNICODE range: Basic Latin [20..7E]
+2020-02-20T15:57:39.546+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1046: Found UNICODE range: Cyrillic [400..4FF]
+2020-02-20T15:57:39.546+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1046: Found UNICODE range: General Punctuation - Windows 1252 [2013..2014]
+2020-02-20T15:57:39.546+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1046: Found UNICODE range: Latin-1 Supplement [A0..FF]
+2020-02-20T15:57:39.578+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1017: Building PRC file, record count:   0000754
+2020-02-20T15:57:41.523+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1039: Final stats - text compressed to (in % of original size):  49.76%
+2020-02-20T15:57:41.523+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1040: The document identifier is: "RKD_CXL_RYGR-L_KWHXG._SUS_1"
+2020-02-20T15:57:41.523+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1041: The file format version is V6
+2020-02-20T15:57:41.523+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1031: Saving PRC file
+2020-02-20T15:57:41.523+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1032: PRC built successfully
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1016: Building enhanced PRC file
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1007: Resolving mediaidlinks
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1011: Writing mediaidlinks
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1009: Resolving guide items
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1017: Building PRC file, record count:   0000751
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1039: Final stats - text compressed to (in % of original size):  51.21%
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1041: The file format version is V8
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I15000:  Approximate Standard Mobi Deliverable file size :   0001671KB
+2020-02-20T15:57:41.526+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I15001:  Approximate KF8 Deliverable file size :   0001726KB
+2020-02-20T15:57:41.543+0300	DEBUG	processor/mobiazw3.go:174	Info(prcgen):I1036: Mobi file built successfully
+2020-02-20T15:57:41.547+0300	DEBUG	processor/mobiazw3.go:155	kindlegen done	{"elapsed": "4.013522639s", "path": "/home/squizduos/Projects/tokindle/bin/kindlegen", "args": ["/tmp/fb2c-959924195/OEBPS/content.opf", "-c1", "-locale", "en", "-o", "avidreaders.ru__vsya-stalnaya-krysa-tom-1.mobi"]}
+2020-02-20T15:57:41.606+0300	DEBUG	mobi/splitter.go:210	Inserting JFIF APP0 marker segment into mobi thumbnail
+2020-02-20T15:57:41.612+0300	DEBUG	processor/process.go:415	Saving content - done	{"elapsed": "4.133289664s"}
+2020-02-20T15:57:41.612+0300	DEBUG	processor/process.go:510	Cleaning	{"location": "/tmp/fb2c-959924195"}
+2020-02-20T15:57:41.614+0300	INFO	commands/convert.go:39	Conversion completed	{"elapsed": "4.517018135s", "to": "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.mobi"}
+2020-02-20T15:57:41.614+0300	INFO	commands/convert.go:237	Processing completed	{"elapsed": "4.51829244s"}
+2020-02-20T15:57:41.614+0300	DEBUG	fb2converter@/fb2c.go:103	Program ended	{"parsed args": ["convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"]}
