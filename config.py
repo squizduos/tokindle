@@ -8,7 +8,15 @@ class AppConfig:
         token = environ.var()
         host = environ.var("0.0.0.0")
         port = environ.var(8000, converter=int)  
-        webhook = environ.var() 
+        webhook = environ.var()
+
+    @environ.config
+    class DB:
+        host = environ.var()
+        port = environ.var(27017, converter=int)
+        username = environ.var()
+        password = environ.var()
+        name = environ.var()
 
     @environ.config
     class Converter:

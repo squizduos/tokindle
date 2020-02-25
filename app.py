@@ -53,7 +53,7 @@ def main():
     dispatcher = Dispatcher(bot)
     
     mongoengine.disconnect()
-    mongoengine.connect('tokindle', host=cfg.db)
+    mongoengine.connect('tokindle', host=cfg.db.host, port=cfg.db.port, username=cfg.db.username, password=cfg.db.password, db=cfg.db.name)
 
     if cfg.bot.webhook:
         start_webhook(dispatcher, '/webhook',
