@@ -13,6 +13,7 @@ environ-config = "*"
 dnspython = "*"
 mongoengine = "*"
 requests = "*"
+aiohttp-socks = "*"
 
 [requires]
 python_version = "3.8"

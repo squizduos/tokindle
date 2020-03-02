@@ -49,11 +49,11 @@ def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
     print(cfg)
-    bot = Bot(cfg.bot.token)
+    bot = Bot(token=cfg.bot.token, proxy="socks5://squizduos:4c146c35@squizduos.ru:1080")
     dispatcher = Dispatcher(bot)
     
     mongoengine.disconnect()
-    mongoengine.connect('tokindle', host=cfg.db.host, port=cfg.db.port, username=cfg.db.username, password=cfg.db.password, db=cfg.db.name)
+    mongoengine.connect(cfg.db.name, host=cfg.db.host, port=cfg.db.port, username=cfg.db.username, password=cfg.db.password)
 
     if cfg.bot.webhook:
         start_webhook(dispatcher, '/webhook',
