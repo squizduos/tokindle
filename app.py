@@ -49,15 +49,18 @@ def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
     print(cfg)
-    bot = Bot(token=cfg.bot.token, proxy="socks5://squizduos:4c146c35@squizduos.ru:1080")
+    bot = Bot(token=cfg.bot.token, proxy=cfg.bot.proxy)
     dispatcher = Dispatcher(bot)
-    
+
+    connection_string = f"mongodb+srv://{cfg.db.username}:{cfg.db.password}@{cfg.db.host}/{cfg.db.name}"
     mongoengine.disconnect()
-    mongoengine.connect(cfg.db.name, host=cfg.db.host, port=cfg.db.port, username=cfg.db.username, password=cfg.db.password)
+    mongoengine.connect(cfg.db.name, host=connection_string)
 
     if cfg.bot.webhook:
-        start_webhook(dispatcher, '/webhook',
-                      on_startup=functools.partial(on_startup, url=cfg.bot.webhook),
+        path = f"/webhook/{cfg.bot.token}"
+        url = f"https://{cfg.bot.webhook}{path}"
+        start_webhook(dispatcher, path,
+                      on_startup=functools.partial(on_startup, url=url),
                       on_shutdown=on_shutdown,
                       host=cfg.bot.host, port=cfg.bot.port, ssl_context=None)
     else:
