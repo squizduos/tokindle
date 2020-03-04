@@ -1,20 +1,11 @@
-import asyncio
-
 import requests
-import os
 
-import subprocess
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-
-import smtplib
-
-
-def count_words_at_url(url):
-    resp = requests.get(url)
-    return len(resp.text.split())
+def upload_file_to_url(upload_file, url):
+    s = requests.Session()
+    files = {'upload_file': open(upload_file, 'rb')}
+    r = requests.Request('POST', url, files=files).prepare()
+    resp = s.send(r)
+    return resp.status_code
 
 
 async def send_email(host, port, login, password, to, file_name):
@@ -79,16 +70,3 @@ async def run_command(*args):
 
     # Return stdout
     return result
-
-
-async def upload_to_anonfile(upload_file):
-    pass
-
-def main():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop) 
-    result = loop.run_until_complete(run_command("./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"))
-    print(result)
-    loop.close()
-
-main()

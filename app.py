@@ -52,9 +52,8 @@ def main():
     bot = Bot(token=cfg.bot.token, proxy=cfg.bot.proxy)
     dispatcher = Dispatcher(bot)
 
-    connection_string = f"mongodb+srv://{cfg.db.username}:{cfg.db.password}@{cfg.db.host}/{cfg.db.name}"
     mongoengine.disconnect()
-    mongoengine.connect(cfg.db.name, host=connection_string)
+    mongoengine.connect(host=cfg.db)
 
     if cfg.bot.webhook:
         path = f"/webhook/{cfg.bot.token}"

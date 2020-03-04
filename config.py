@@ -34,6 +34,6 @@ class AppConfig:
         address = environ.var()
 
     debug = environ.var(False, converter=bool)
-    db = environ.group(DB)
+    db = environ.var()
     bot = environ.group(Bot)
     converter = environ.group(Converter)
