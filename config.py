@@ -12,14 +12,6 @@ class AppConfig:
         webhook = environ.var()
 
     @environ.config
-    class DB:
-        host = environ.var()
-        port = environ.var(27017, converter=int)
-        username = environ.var()
-        password = environ.var()
-        name = environ.var()
-
-    @environ.config
     class Converter:
         fb2 = environ.var("fb2c")
         mobi = environ.var("kindlegen")
@@ -34,6 +26,7 @@ class AppConfig:
         address = environ.var()
 
     debug = environ.var(False, converter=bool)
+    temp_dir = environ.var("/tmp/tokindle")
     db = environ.var()
     bot = environ.group(Bot)
     converter = environ.group(Converter)

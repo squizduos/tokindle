@@ -4,14 +4,16 @@ import ssl
 import sys
 
 
-from aiogram import Bot
+from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.webhook import *
 from aiogram.utils.executor import start_polling, start_webhook
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
-import motor.motor_asyncio
+from aiogram.utils.helper import Helper, HelperMode, ListItem
 
-from bot import cmd_start
+from bot import cmd_start, cmd_get_file
 from config import AppConfig
 
 import environ
@@ -22,7 +24,10 @@ logging.basicConfig(level=logging.INFO)
 
 
 async def on_startup(dispatcher, url=None):
+    dispatcher.middleware.setup(LoggingMiddleware())
+
     dispatcher.register_message_handler(cmd_start, commands=['start', 'welcome'])
+    dispatcher.register_message_handler(cmd_get_file, content_types=types.ContentTypes.DOCUMENT)
 
     bot = dispatcher.bot
 
@@ -48,9 +53,8 @@ async def on_shutdown(dispatcher):
 def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
-    print(cfg)
     bot = Bot(token=cfg.bot.token, proxy=cfg.bot.proxy)
-    dispatcher = Dispatcher(bot)
+    dispatcher = Dispatcher(bot, storage=MemoryStorage())
 
     mongoengine.disconnect()
     mongoengine.connect(host=cfg.db)
