@@ -1,3 +1,5 @@
+import asyncio
+
 import requests
 
 def upload_file_to_url(upload_file, url):
