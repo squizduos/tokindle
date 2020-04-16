@@ -23,10 +23,14 @@ class AppConfig:
         username = environ.var()
         password = environ.var()
         tls = environ.var(True, converter=bool)  
-        address = environ.var()
 
     debug = environ.var(False, converter=bool)
     temp_dir = environ.var("/tmp/tokindle")
     db = environ.var()
     bot = environ.group(Bot)
+    email = environ.group(Email)
     converter = environ.group(Converter)
+
+
+def get():
+    return environ.to_config(AppConfig)

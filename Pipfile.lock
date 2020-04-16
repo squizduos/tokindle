@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "edaa61d4e25ba94aa3cf4756c340c9eac93240f5560696d7181df10b370a5688"
+            "sha256": "ba727c8e1c3f2869fc79a0b40e1847ca7a7ebb0fb90717e72be29eb5682e9b87"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,11 @@
     "default": {
         "aiogram": {
             "hashes": [
-                "sha256:4a9b643927992647afacba822699799d8e273d2da93db30cd1ffa350166822a9",
-                "sha256:a420915727ec8d992dda96c9ce6f30d0287d58622f6adac477cae37e74c0e29f"
+                "sha256:42d705285b0aa4ddd2ae0caae5ae1517dc9494c690a1e158c53b1702079e4ddc",
+                "sha256:8d716f3b2b7bb5a9b01725a222b2a8014af1c20b7dbde9871dba4de9257df899"
             ],
             "index": "pypi",
-            "version": "==2.6.1"
+            "version": "==2.7"
         },
         "aiohttp": {
             "hashes": [
@@ -43,11 +43,11 @@
         },
         "aiohttp-socks": {
             "hashes": [
-                "sha256:654203308e24aa4f012f96d4af7675404565f4cc39a113d110e3d345ede0838f",
-                "sha256:cdea1d99c14fd3884968a34a6ecb2784f4c48e657aec99ec1b986a10812287bd"
+                "sha256:43803a8eafed9c1eaccf2c6f09a485daf91663d653dd2bdf6732dcece0a4f803",
+                "sha256:47912c72a645716e822159376905c4f0c71fa4858f37698bdd7c4ee40e6f68d4"
             ],
             "index": "pypi",
-            "version": "==0.3.4"
+            "version": "==0.3.7"
         },
         "async-timeout": {
             "hashes": [
@@ -72,10 +72,10 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3",
-                "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"
+                "sha256:1d987a998c75633c40847cc966fcf5904906c920a7f17ef374f5aa4282abd304",
+                "sha256:51fcb31174be6e6664c5f69e3e1691a2d72a1a12e90f872cbdb1567eb47b6519"
             ],
-            "version": "==2019.11.28"
+            "version": "==2020.4.5.1"
         },
         "chardet": {
             "hashes": [
@@ -94,11 +94,11 @@
         },
         "environ-config": {
             "hashes": [
-                "sha256:539a1025aeaa015eb03fdd03201517172816ce32ace377c54cbc55c1e4f24739",
-                "sha256:cd5fa819f047853fb7b6c432d35976a84eacd54647a109fa2af27bafcdab7af1"
+                "sha256:0e300307520c1e6a5424018b7f70246a2c7f4cb5cc5cbbebccc6a982eb1767cb",
+                "sha256:3167feda073bd3cd3457a3e5fa7c2836b6574c046cd0dcd79385ce3284e837bd"
             ],
             "index": "pypi",
-            "version": "==19.1.0"
+            "version": "==20.1.0"
         },
         "idna": {
             "hashes": [
@@ -204,6 +204,14 @@
             ],
             "version": "==3.10.1"
         },
+        "pysocks": {
+            "hashes": [
+                "sha256:08e69f092cc6dbe92a0fdd16eeb9b9ffbc13cadfe5ca4c7bd92ffb078b293299",
+                "sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
+                "sha256:3f8804571ebe159c380ac6de37643bb4685970655d3bba243530d6558b799aa0"
+            ],
+            "version": "==1.7.1"
+        },
         "pytz": {
             "hashes": [
                 "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d",
@@ -212,6 +220,9 @@
             "version": "==2019.3"
         },
         "requests": {
+            "extras": [
+                "socks"
+            ],
             "hashes": [
                 "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
                 "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"
@@ -263,6 +274,14 @@
                 "sha256:840947ebfa8b58f318d42301cf8c0a20fd794a33b61cc4638e28e9e61ba32f42"
             ],
             "version": "==2.3.3"
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff",
+                "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==0.4.3"
         },
         "isort": {
             "hashes": [

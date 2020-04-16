@@ -1,15 +1,16 @@
+import glob
+import os
 import asyncio
+import logging
 
 import requests
-import os
 
-import subprocess
+import config
+import helpers
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
+cfg = config.get()
 
-import smtplib
+logging.basicConfig(level=logging.INFO)
 
 
 def count_words_at_url(url):
@@ -17,78 +18,31 @@ def count_words_at_url(url):
     return len(resp.text.split())
 
 
-async def send_email(host, port, login, password, to, file_name):
-    # create message object instance
-    msg = MIMEMultipart()
+async def convert_fb2c(book_folder: str):
+    program = os.path.join(os.curdir, cfg.converter.fb2)
+    return_code, output = await helpers.run_command(program, "convert", "--to", "mobi", book_folder, book_folder)
+    logging.info(f"Running FB2C for folder {book_folder}: return code {return_code}, output {output}")
 
-    # setup the parameters of the message
-    msg['From'] = login
-    msg['To'] = to
-    msg['Subject'] = file_name
-    
-    # add in the message body
-    msg.attach(MIMEApplication(open(file_name).read()))
-    
-    #create server
-    server = smtplib.SMTP(f'{host}:{port}')
+    if return_code != 0:
+        return None
 
-    server.starttls()
-    
-    # Login Credentials for sending the mail
-    server.login(login, password)
-
-    # send the message via the server.
-    server.sendmail(login, to, msg.as_string())
-    
-    server.quit()
-
-
-async def run_command(*args):
-    """Run command in subprocess.
-
-    Example from:
-        http://asyncio.readthedocs.io/en/latest/subprocess.html
-    """
-    # Create subprocess
-    process = await asyncio.create_subprocess_exec(
-        *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-
-    # Status
-    print("Started: %s, pid=%s" % (args, process.pid), flush=True)
-
-    # Wait for the subprocess to finish
-    stdout, stderr = await process.communicate()
-
-    # Progress
-    if process.returncode == 0:
-        print(
-            "Done: %s, pid=%s, result: %s"
-            % (args, process.pid, stdout.decode().strip()),
-            flush=True,
-        )
-    else:
-        print(
-            "Failed: %s, pid=%s, result: %s"
-            % (args, process.pid, stderr.decode().strip()),
-            flush=True,
-        )
-
-    # Result
-    result = stdout.decode().strip()
-
-    # Return stdout
-    return result
-
+    conv_search = glob.glob(os.path.join(book_folder, "*.mobi"))
+    logging.info(f"MOBI files in folder {book_folder}: {conv_search}")
+    if len(conv_search) > 0:
+        return conv_search[0]
+    # return return_code, output
 
 async def upload_to_anonfile(upload_file):
     pass
 
+
+
 def main():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop) 
-    result = loop.run_until_complete(run_command("./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"))
+    result = loop.run_until_complete(
+        helpers.run_command("./bin/fb2c", "convert", "--to", "mobi", "/tmp/avidreaders.ru__vsya-stalnaya-krysa-tom-1.fb2.zip", "/tmp/"))
     print(result)
     loop.close()
 
-main()
+# main()

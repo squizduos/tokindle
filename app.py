@@ -13,7 +13,7 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
 from aiogram.utils.helper import Helper, HelperMode, ListItem
 
-from bot import cmd_start, cmd_get_file
+from bot import cmd_start, cmd_get_file, cmd_unable_to_process_file, cmd_register, UserState
 from config import AppConfig
 
 import environ
@@ -26,8 +26,11 @@ logging.basicConfig(level=logging.INFO)
 async def on_startup(dispatcher, url=None):
     dispatcher.middleware.setup(LoggingMiddleware())
 
-    dispatcher.register_message_handler(cmd_start, commands=['start', 'welcome'])
-    dispatcher.register_message_handler(cmd_get_file, content_types=types.ContentTypes.DOCUMENT)
+    dispatcher.register_message_handler(cmd_start, state="*", commands=['start'])
+    dispatcher.register_message_handler(cmd_register, state=[UserState.setup])
+    dispatcher.register_message_handler(cmd_unable_to_process_file, content_types=types.ContentTypes.DOCUMENT,
+                                        state=[UserState.setup, UserState.prepared, UserState.sent])
+    dispatcher.register_message_handler(cmd_get_file, content_types=types.ContentTypes.DOCUMENT, state=UserState.ready)
 
     bot = dispatcher.bot
 
@@ -54,6 +57,7 @@ def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
     bot = Bot(token=cfg.bot.token, proxy=cfg.bot.proxy)
+    # storage = MemoryStorage()
     dispatcher = Dispatcher(bot, storage=MemoryStorage())
 
     mongoengine.disconnect()

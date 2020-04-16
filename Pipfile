@@ -12,7 +12,7 @@ motor = "*"
 environ-config = "*"
 dnspython = "*"
 mongoengine = "*"
-requests = "*"
+requests = {extras = ["socks"],version = "*"}
 aiohttp-socks = "*"
 
 [requires]
