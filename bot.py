@@ -17,6 +17,12 @@ cfg = config.get()
 
 logging.basicConfig(level=logging.INFO)
 
+# File types:
+# .azw, .mobi, .doc, .docx, .txt, .rtf - only send
+# .pdf - only send
+# .epub, .htm, .html - kindlegen then send
+# .fb2, .fb2.zip - fb2c then send
+
 
 # States
 class UserState(StatesGroup):
@@ -40,11 +46,11 @@ async def cmd_start(message: types.Message, state: FSMContext):
         await UserState.setup.set()
         return SendMessage(
             message.chat.id,
-            f"Здравствуйте, {user.name}! To Kindle - бот, который сконвертирует вашу книгу для Amazon Kindle.\n\n"
-            f"Чтобы начать, необходимо настроить доставку книг на ваш Kindle.\n"
+            f"Здравствуйте, {user.name}! *To Kindle* - бот, который сконвертирует вашу книгу для Amazon Kindle.\n\n"
+            f"Чтобы начать, необходимо настроить доставку книг на ваш *Amazon Kindle*.\n\n"
             f"1. Перейдите по [ссылке](https://www.amazon.com/hz/mycd/myx#/home/settings/payment).\n"
-            f"2. В разделе __Approved Personal Document E-mail List__ добавьте адрес **send@tokindle.ru**.\n"
-            f"3. В разделе __Send-to-Kindle E-Mail Settings__ найдите почту своего Kindle и пришлите боту.\n",
+            f"2. В разделе _Approved Personal Document E-mail List_ добавьте адрес `send@tokindle.ru`.\n"
+            f"3. В разделе _Send-to-Kindle E-Mail Settings_ найдите почту своего Kindle и пришлите боту.\n",
             parse_mode="Markdown"
         )
 
@@ -53,7 +59,7 @@ async def cmd_register(message: types.Message, state: FSMContext):
     user = await User.get_or_create(message.from_user)
 
     email = message.text.strip()
-    if email.endswith('@kindle.com') or email.endswith('@free.kindle.com'):
+    if email.endswith(('@kindle.com', '@free.kindle.com')):
         user.kindle = email
         user.save()
         await UserState.ready.set()
@@ -85,15 +91,30 @@ async def cmd_get_file(message: types.Message, state: FSMContext):
 
     await bot.edit_message_text(f"Скачиваем файл...", message.chat.id, msg.message_id, parse_mode="Markdown")
 
-    book_file = await helpers.tg_download_file(message.document)
+    book_file = await tasks.tg_download_file(message.document)
 
     if not book_file:
         await bot.edit_message_text(f"Ошибка скачивания файла.", message.chat.id, msg.message_id, parse_mode="Markdown")
         await UserState.ready.set()
         return msg
 
-    await bot.edit_message_text(f"Конвертируем файл в MOBI...", message.chat.id, msg.message_id, parse_mode="Markdown")
-    convert_book_file = await tasks.convert_fb2c(os.path.dirname(book_file))
+    _, book_ext = await helpers.get_file_name_extension(book_file)
+
+    if book_ext in [".fb2", ".fb2.zip"]:
+        await bot.edit_message_text(f"Конвертируем файл в MOBI...", message.chat.id, msg.message_id,
+                                    parse_mode="Markdown")
+        convert_book_file = await tasks.convert_fb2c(book_file)
+    elif book_ext in [".epub", ".htm", ".html"]:
+        await bot.edit_message_text(f"Конвертируем файл в MOBI...", message.chat.id, msg.message_id,
+                                    parse_mode="Markdown")
+        convert_book_file = await tasks.convert_kindlegen(book_file)
+    elif book_ext in [".azw", ".mobi", ".doc", ".docx", ".txt", ".rtf", ".pdf"]:
+        convert_book_file = book_file
+    else:
+        await bot.edit_message_text(f"Ошибка конвертации файла: формат {book_ext} не поддерживается.",
+                                    message.chat.id, msg.message_id, parse_mode="Markdown")
+        await UserState.ready.set()
+        return msg
 
     if not convert_book_file:
         await bot.edit_message_text(f"Ошибка конвертации файла.", message.chat.id, msg.message_id, parse_mode="Markdown")
@@ -101,7 +122,7 @@ async def cmd_get_file(message: types.Message, state: FSMContext):
         return msg
 
     await bot.edit_message_text(f"Отправляем файл по почте...", message.chat.id, msg.message_id, parse_mode="Markdown")
-    send_result = await helpers.send_email(cfg.email.host, cfg.email.port, cfg.email.username, cfg.email.password, cfg.email.tls, user.kindle, convert_book_file)
+    send_result = await tasks.send_email(user.kindle, convert_book_file)
 
     if send_result is None:
         await bot.edit_message_text(f"Ошибка отправки файла.", message.chat.id, msg.message_id, parse_mode="Markdown")
@@ -113,7 +134,7 @@ async def cmd_get_file(message: types.Message, state: FSMContext):
 
 
 async def cmd_unable_to_process_file(message: types.Message, state: FSMContext):
-    user = User.get_or_create(message.from_user)
+    user = await User.get_or_create(message.from_user)
     ping = datetime.datetime.now() - message.date
-    await UserState.email.set()
+    await UserState.setup.set()
     return SendMessage(message.chat.id, f"Невозможно!")

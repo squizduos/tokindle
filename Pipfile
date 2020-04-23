@@ -14,6 +14,7 @@ dnspython = "*"
 mongoengine = "*"
 requests = {extras = ["socks"],version = "*"}
 aiohttp-socks = "*"
+filetype = "*"
 
 [requires]
 python_version = "3.8"

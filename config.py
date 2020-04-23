@@ -13,8 +13,8 @@ class AppConfig:
 
     @environ.config
     class Converter:
-        fb2 = environ.var("fb2c")
-        mobi = environ.var("kindlegen")
+        fb2c = environ.var()
+        kindlegen = environ.var()
 
     @environ.config
     class Email:

@@ -14,3 +14,13 @@ class User(Document):
         if not obj:
             obj = cls(tg_id=u.id, name=u.full_name).save()
         return obj
+
+
+class Convert(Document):
+    convert_id = StringField(required=True)
+    original_file = StringField(required=True)
+    converted_file = StringField()
+    program = StringField()
+    return_code = IntField()
+    stdout = StringField()
+    stderr = StringField()

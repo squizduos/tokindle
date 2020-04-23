@@ -1,14 +1,11 @@
-import argparse
-import logging
-import ssl
-import sys
-
+import os
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.webhook import *
 from aiogram.utils.executor import start_polling, start_webhook
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.fsm_storage.files import JSONStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
 from aiogram.utils.helper import Helper, HelperMode, ListItem
@@ -49,16 +46,17 @@ async def on_startup(dispatcher, url=None):
         await bot.delete_webhook()
 
 
-async def on_shutdown(dispatcher):
-    print('Shutdown.')
-
+async def on_shutdown(dispatcher: Dispatcher):
+    logging.debug(f"Shutdowning...")
+    await dispatcher.storage.close()
+    await dispatcher.storage.wait_closed()
 
 def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
     bot = Bot(token=cfg.bot.token, proxy=cfg.bot.proxy)
-    # storage = MemoryStorage()
-    dispatcher = Dispatcher(bot, storage=MemoryStorage())
+    storage = JSONStorage(os.path.join(cfg.temp_dir, "state.json"))
+    dispatcher = Dispatcher(bot, storage=storage)
 
     mongoengine.disconnect()
     mongoengine.connect(host=cfg.db)
