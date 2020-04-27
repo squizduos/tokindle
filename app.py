@@ -7,6 +7,7 @@ from aiogram.utils.executor import start_polling, start_webhook
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.files import JSONStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.utils.executor import set_webhook
 
 from aiogram.utils.helper import Helper, HelperMode, ListItem
 
@@ -51,6 +52,10 @@ async def on_shutdown(dispatcher: Dispatcher):
     await dispatcher.storage.close()
     await dispatcher.storage.wait_closed()
 
+async def hello(request):
+    return web.Response(text="Hello, world")
+
+
 def main():
     cfg = environ.to_config(AppConfig)
     # Create bot & dispatcher instances.
@@ -61,13 +66,22 @@ def main():
     mongoengine.disconnect()
     mongoengine.connect(host=cfg.db)
 
-    if cfg.bot.webhook:
-        path = f"/webhook/{cfg.bot.token}"
-        url = f"https://{cfg.bot.webhook}{path}"
-        start_webhook(dispatcher, path,
-                      on_startup=functools.partial(on_startup, url=url),
-                      on_shutdown=on_shutdown,
-                      host=cfg.bot.host, port=cfg.bot.port, ssl_context=None)
+    if cfg.bot.host:
+        webhook_path = f"/webhook/{cfg.bot.token}"
+        executor = set_webhook(
+            dispatcher=dispatcher,
+            webhook_path=webhook_path,
+            loop=None,
+            skip_updates=None,
+            on_startup=functools.partial(on_startup, url=f"https://{cfg.bot.host}{webhook_path}"),
+            on_shutdown=on_shutdown,
+            check_ip=False,
+            retry_after=None,
+            route_name='webhook_handler',
+        )
+        # Paste web here
+        executor.web_app.add_routes([web.get('/', hello)])
+        executor.run_app(host="0.0.0.0", port=cfg.bot.port, ssl_context=None)
     else:
         start_polling(dispatcher, on_startup=on_startup, on_shutdown=on_shutdown)
 

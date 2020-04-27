@@ -17,9 +17,8 @@ import config
 import db
 import helpers
 
-cfg = config.get()
-
-logging.basicConfig(level=logging.INFO)
+cfg = config.get_config()
+logger = config.get_logger()
 
 
 async def tg_download_file(document: aiogram.types.Document):
@@ -33,7 +32,7 @@ async def tg_download_file(document: aiogram.types.Document):
     try:
         r = requests.get(url, proxies=proxies)
     except Exception as e:
-        logging.error(f"Unable to download {url}: {str(e)}")
+        logger.error(f"Unable to download {url}: {str(e)}")
         return None
 
     if r.ok:
@@ -48,7 +47,7 @@ async def tg_download_file(document: aiogram.types.Document):
 
         return file_path
     else:
-        logging.error(f"Unable to download {url}: status code {r.status_code}, result {r.text}")
+        logger.error(f"Unable to download {url}: status code {r.status_code}, result {r.text}")
         return None
 
 
@@ -58,7 +57,7 @@ async def convert_fb2c(book_file: str):
     program, args = os.path.join(os.curdir, cfg.converter.fb2c), ["convert", "--to", "mobi", book_folder, book_folder]
 
     return_code, stdout, stderr = await helpers.run_command(program, *args)
-    logging.debug(f"Running FB2C for folder {book_folder}: return code {return_code}, output")
+    logger.debug(f"Running FB2C for folder {book_folder}: return code {return_code}, output")
 
     if return_code == 0:
         conv_search = glob.glob(os.path.join(book_folder, "*.mobi"))
@@ -85,7 +84,7 @@ async def convert_kindlegen(book_file: str):
     program, args = os.path.join(os.curdir, cfg.converter.kindlegen), [book_file, "-o", f"{fname}.mobi"]
 
     return_code, stdout, stderr = await helpers.run_command(program, *args)
-    logging.debug(f"Running kindlegen for file {book_file}: return code {return_code}")
+    logger.debug(f"Running kindlegen for file {book_file}: return code {return_code}")
 
     # FIXME: kindlegen returns successful codes 0, 1.
     # More: https://www.mobileread.com/forums/showthread.php?t=269438
@@ -128,8 +127,9 @@ async def send_email(to, file_name):
         server.login(cfg.email.username, cfg.email.password)
         result = server.sendmail(cfg.email.username, to, msg.as_string())
     except Exception as e:
-        logging.error(f"Unable to send {file_name} to {to}: {str(e)}")
+        logger.error(f"Unable to send {file_name} to {to}: {str(e)}")
         return None
     else:
+        logger.debug(f"Successfully sent {file_name} to {to}.")
         server.quit()
         return result

@@ -1,5 +1,7 @@
 import environ
 
+import logging
+
 
 @environ.config(prefix="APP")
 class AppConfig:
@@ -8,8 +10,7 @@ class AppConfig:
         token = environ.var()
         proxy = environ.var()
         host = environ.var("0.0.0.0")
-        port = environ.var(8000, converter=int)  
-        webhook = environ.var()
+        port = environ.var(8000, converter=int)
 
     @environ.config
     class Converter:
@@ -32,5 +33,27 @@ class AppConfig:
     converter = environ.group(Converter)
 
 
-def get():
+def get_config():
     return environ.to_config(AppConfig)
+
+
+def get_logger():
+    cfg = get_config()
+    logging_level = logging.DEBUG if cfg.debug else logging.INFO
+    _logger = logging.getLogger('app')
+    _logger.setLevel(logging_level)
+
+    # create console handler and set level to debug
+    ch = logging.StreamHandler()
+    ch.setLevel(logging_level)
+
+    # create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # add formatter to ch
+    ch.setFormatter(formatter)
+
+    # add ch to logger
+    _logger.addHandler(ch)
+    return _logger
+

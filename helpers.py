@@ -17,9 +17,8 @@ import random
 import string
 
 
-cfg = config.get()
-
-logging.basicConfig(level=logging.INFO)
+cfg = config.get_config()
+logger = config.get_logger()
 
 
 async def get_file_name_extension(book_file: str) -> (str, str):
@@ -27,7 +26,7 @@ async def get_file_name_extension(book_file: str) -> (str, str):
         p = pathlib.Path(book_file)
         return p.stem, p.suffix
     except Exception as e:
-        logging.error(e)
+        logger.error(e)
         return "", ""
 
 
@@ -53,20 +52,19 @@ async def run_command(program, *args):
             stderr=asyncio.subprocess.PIPE
         )
 
-        logging.debug("Started: %s, pid=%s" % (args, process.pid))
+        logger.debug("Started: %s, pid=%s" % (args, process.pid))
 
         stdout, stderr = await process.communicate()
-
         stdout_s, stderr_s = stdout.decode().strip(), stderr.decode().strip()
 
-        logging.debug(f"Done: {program} {' '.join(args)}\n")
-        logging.debug(f"PID: {process.pid}\n")
-        logging.debug(f"Return code: {process.returncode}\n")
-        logging.debug(f"Stdout: {stdout_s}\n")
-        logging.debug(f"Stderr: {stderr_s}\n")
+        logger.debug(f"Done: {program} {' '.join(args)}\n")
+        logger.debug(f"PID: {process.pid}\n")
+        logger.debug(f"Return code: {process.returncode}\n")
+        logger.debug(f"Stdout: {stdout_s}\n")
+        logger.debug(f"Stderr: {stderr_s}\n")
 
         return process.returncode, stdout_s, stderr_s
     except Exception as e:
-        logging.error(f"Failed: {program} {' '.join(args)}\n")
-        logging.error(f"Exception: {str(e)}\n")
+        logger.error(f"Failed: {program} {' '.join(args)}\n")
+        logger.error(f"Exception: {str(e)}\n")
         return -1, "", ""

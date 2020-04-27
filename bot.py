@@ -13,9 +13,7 @@ from db import User
 import helpers
 import tasks
 
-cfg = config.get()
-
-logging.basicConfig(level=logging.INFO)
+cfg = config.get_config()
 
 # File types:
 # .azw, .mobi, .doc, .docx, .txt, .rtf - only send
