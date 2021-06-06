@@ -10,7 +10,7 @@ class AppConfig:
         token = environ.var()
         proxy = environ.var()
         host = environ.var("0.0.0.0")
-        port = environ.var(8000, converter=int)
+        port = environ.var(8080, converter=int)
 
     @environ.config
     class Converter:

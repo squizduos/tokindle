@@ -52,6 +52,7 @@ async def on_shutdown(dispatcher: Dispatcher):
     await dispatcher.storage.close()
     await dispatcher.storage.wait_closed()
 
+
 async def hello(request):
     return web.Response(text="Hello, world")
 

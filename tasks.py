@@ -38,7 +38,7 @@ async def tg_download_file(document: aiogram.types.Document):
     if r.ok:
         download_path = os.path.join(cfg.temp_dir, document.file_unique_id)
         if not os.path.exists(download_path):
-            os.mkdir(download_path)
+            os.makedirs(download_path)
 
         file_path = os.path.join(download_path, document.file_name)
 
